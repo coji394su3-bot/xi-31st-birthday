@@ -9,9 +9,65 @@
 </head>
 <body><main>
 <section class="hero"><div class="eyebrow">A LITTLE LETTER TO MY 31ST YEAR</div><div class="dog" aria-label="Boget 生日郵差">🐶💌</div><h1>31 歲的希<br>把日子過成喜歡的樣子</h1><p class="sub">慢慢長大，慢慢喜歡自己。<br>今年也想收藏一些溫柔的話。</p><div class="pill" id="countdown">正在計算生日倒數…</div></section>
-<section class="section"><h2>✉️ Boget 的生日郵局</h2><p class="hint">寫一封信給 31 歲的希吧。<br>可以署名，也可以用「匿名」寄出。<br>你的祝福只有希登入後才會看見。</p><form id="letterForm"><label class="field" for="sender">寄件人</label><input id="sender" maxlength="40" placeholder="你的名字，或填匿名" required><label class="field" for="message">想對希說的話</label><textarea id="message" minlength="5" maxlength="3000" placeholder="親愛的希，31 歲生日快樂……" required></textarea><button type="submit" disabled>🐾 Boget 郵差準備中</button><div class="note" role="status">網站尚在準備中，暫時不開放寄信。</div></form></section>
+<section class="section"><h2>✉️ Boget 的生日郵局</h2><p class="hint">寫一封信給 31 歲的希吧。<br>可以署名，也可以用「匿名」寄出。<br>你的祝福只有希登入後才會看見。</p><form id="letterForm"><label class="field" for="sender">寄件人</label><input id="sender" maxlength="40" placeholder="你的名字，或填匿名" required><label class="field" for="message">想對希說的話</label><textarea id="message" minlength="5" maxlength="3000" placeholder="親愛的希，31 歲生日快樂……" required></textarea>
+<button type="submit" id="sendButton">🐾 交給 Boget 郵差送出 💌</button>
+<div class="note" id="sendStatus" role="status">寫下祝福，Boget 會幫你送到希的秘密信箱。</div>
+</form></section>
 <div class="footer">Made with love · XI's 31st Birthday · 2026</div>
 </main><script>
 const target=new Date('2026-11-16T00:00:00+08:00');const now=new Date();const diff=target-now;const el=document.getElementById('countdown');if(diff>0){const days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000);el.textContent=`距離 31 歲生日還有 ${days} 天 ${hours} 小時 ✨`;}else{el.textContent='31 歲，生日快樂！🎂';}
-document.getElementById('letterForm').addEventListener('submit',e=>e.preventDefault());
+
+const form = document.getElementById('letterForm');
+const sendButton = document.getElementById('sendButton');
+const sendStatus = document.getElementById('sendStatus');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  if (!form.reportValidity() || sendButton.disabled) return;
+
+  const sender = document.getElementById('sender').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!sender || message.length < 5) {
+    sendStatus.textContent = '請填寫名字及至少 5 個字的祝福。';
+    return;
+  }
+
+  sendButton.disabled = true;
+  sendButton.textContent = '🐶 Boget 正在送信中…';
+  sendStatus.textContent = '正在把祝福送進秘密信箱 💌';
+
+  try {
+    const response = await fetch(
+      'https://moqhjmuejxdurtfjgmbs.supabase.co/functions/v1/send-birthday-letter',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          sender_name: sender,
+          message: message
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.ok) {
+      throw new Error(result.message || '寄信失敗，請稍後再試。');
+    }
+
+    sendStatus.textContent = '💌 送達成功！Boget 已經把祝福放進希的秘密信箱。';
+    form.reset();
+  } catch (error) {
+    sendStatus.textContent =
+      '🥺 ' + (error.message || '寄信失敗，請稍後再試。');
+  } finally {
+    sendButton.disabled = false;
+    sendButton.textContent = '🐾 交給 Boget 郵差送出 💌';
+  }
+});
+
 </script></body></html>
