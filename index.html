@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>31 歲的希｜把日子過成喜歡的樣子</title>
+<style>
+:root{--blue:#91a9b8;--deep:#486777;--cream:#faf6ef;--ink:#405660}*{box-sizing:border-box}body{margin:0;background:linear-gradient(150deg,#f8f4eb,#e5eef1);color:var(--ink);font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;min-height:100vh}main{max-width:760px;margin:auto;padding:55px 20px 90px}.hero{text-align:center;padding:55px 22px;background:#ffffffaa;border:1px solid #fff;border-radius:32px;box-shadow:0 15px 45px #6e8d9d1c}.eyebrow{letter-spacing:.22em;font-size:12px;color:#708c9c}.dog{font-size:75px;margin:20px 0 5px}.hero h1{font-family:serif;font-size:clamp(29px,6vw,48px);font-weight:500;line-height:1.4;margin:14px 0}.sub{line-height:2;color:#6e7e83}.pill{display:inline-block;margin-top:16px;background:#e4edf0;border-radius:100px;padding:12px 22px;font-size:14px}.section{margin-top:28px;background:#fffaf5c9;border-radius:28px;padding:32px 26px;border:1px solid white}.section h2{text-align:center;font-size:24px;font-weight:500;margin:0 0 10px}.hint{text-align:center;color:#7c8c92;font-size:14px;line-height:1.9}.field{display:block;margin:20px 0 8px;font-size:14px}input,textarea{width:100%;border:1px solid #cbd9de;border-radius:14px;padding:15px;font:inherit;color:var(--ink);background:#fff}textarea{min-height:160px;resize:vertical}button{background:var(--deep);color:white;border:0;border-radius:30px;padding:14px 26px;font:inherit;cursor:pointer;margin-top:18px;width:100%}button:hover{background:#365564}button:disabled{opacity:.55;cursor:not-allowed}.note{text-align:center;font-size:13px;color:#73858d;margin-top:12px}.footer{text-align:center;font-size:12px;color:#84979e;margin-top:35px}#countdown{font-weight:bold;color:var(--deep)}
+</style>
+</head>
+<body><main>
+<section class="hero"><div class="eyebrow">A LITTLE LETTER TO MY 31ST YEAR</div><div class="dog" aria-label="Boget 生日郵差">🐶💌</div><h1>31 歲的希<br>把日子過成喜歡的樣子</h1><p class="sub">慢慢長大，慢慢喜歡自己。<br>今年也想收藏一些溫柔的話。</p><div class="pill" id="countdown">正在計算生日倒數…</div></section>
+<section class="section"><h2>✉️ Boget 的生日郵局</h2><p class="hint">寫一封信給 31 歲的希吧。<br>可以署名，也可以用「匿名」寄出。<br>你的祝福只有希登入後才會看見。</p><form id="letterForm"><label class="field" for="sender">寄件人</label><input id="sender" maxlength="40" placeholder="你的名字，或填匿名" required><label class="field" for="message">想對希說的話</label><textarea id="message" minlength="5" maxlength="3000" placeholder="親愛的希，31 歲生日快樂……" required></textarea><button type="submit" disabled>🐾 Boget 郵差準備中</button><div class="note" role="status">網站尚在準備中，暫時不開放寄信。</div></form></section>
+<div class="footer">Made with love · XI's 31st Birthday · 2026</div>
+</main><script>
+const target=new Date('2026-11-16T00:00:00+08:00');const now=new Date();const diff=target-now;const el=document.getElementById('countdown');if(diff>0){const days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000);el.textContent=`距離 31 歲生日還有 ${days} 天 ${hours} 小時 ✨`;}else{el.textContent='31 歲，生日快樂！🎂';}
+document.getElementById('letterForm').addEventListener('submit',e=>e.preventDefault());
+</script></body></html>
